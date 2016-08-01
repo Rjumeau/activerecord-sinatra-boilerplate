@@ -40,10 +40,10 @@ namespace :db do
 
   desc 'populate the database with sample data'
   task :seed do
-    Dir["#{__dir__}/app/models/*.rb"].each {|file| require file }
+    Dir["#{__dir__}/models/*.rb"].each {|file| require file }
     require "#{__dir__}/db/seeds.rb"
   end
-  
+
   desc 'Gives you a timestamp for your migration file name'
   task :timestamp do
     puts DateTime.now.strftime('%Y%m%d%H%M%S')
