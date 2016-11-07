@@ -8,6 +8,15 @@ end
 
 task default: [:rubocop, :spec]
 
+desc "Open an irb session preloaded with the environment"
+task :console do
+  require 'rubygems'
+  require 'pry'
+  require_relative "config/application"
+
+  Pry.start
+end
+
 ## Active Record related rake tasks
 
 require_relative 'config/application'
@@ -40,7 +49,7 @@ namespace :db do
 
   desc 'populate the database with sample data'
   task :seed do
-    Dir["#{__dir__}/models/*.rb"].each {|file| require file }
+    Dir["#{__dir__}/app/models/*.rb"].each {|file| require file }
     require "#{__dir__}/db/seeds.rb"
   end
 
