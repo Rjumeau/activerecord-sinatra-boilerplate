@@ -1,9 +1,9 @@
-class CreateRestaurants < ActiveRecord::Migration
+class CreateRestaurants < ActiveRecord::Migration[5.0]
   def change
     create_table :restaurants do |t|
       t.string    :name
       t.string    :address
-      t.integer   :rating
+      t.integer   :rating, default: 0, null: false
       t.timestamps
     end
   end
