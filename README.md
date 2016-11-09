@@ -9,18 +9,26 @@ This is a minimalist implementation of ActiveRecord with one `Restaurant` model 
 Now you can play with the `Restaurant` model:
 
 ```bash
-$ irb
-irb> load "config/application.rb"
-irb> restaurant = Restaurant.new(name: "La Tour d'Argent", address: "15 Quai de la Tournelle, 75005 Paris")
-irb> restaurant.persisted?
-     # => false
-irb> restaurant.id
-     # => nil
-irb> restaurant.save
-irb> restaurant.id
-     # => 1
+rake console
 ```
 
-To launch a Sinatra server just run `ruby app.rb` and open a web browser at [http://localhost:4567](http://localhost:4567)
+Here are some commands you can run in the console:
+
+```ruby
+restaurant = Restaurant.new(name: "La Tour d'Argent", address: "15 Quai de la Tournelle, 75005 Paris")
+restaurant.persisted?
+# => false
+restaurant.id
+# => nil
+restaurant.save
+restaurant.id
+# => 1
+```
+
+To launch a Sinatra server just run this and open a web browser at [http://localhost:4567](http://localhost:4567):
+
+```bash
+bundle exec ruby app.rb
+```
 
 Enjoy!
