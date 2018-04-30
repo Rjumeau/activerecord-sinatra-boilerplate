@@ -16,4 +16,4 @@ end
 ActiveRecord::Base.logger = logger
 
 # Load all models!
-Dir["#{__dir__}/../app/models/*.rb"].each {|file| require file }
+Dir["#{__dir__}/../models/*.rb"].each {|file| require file }
