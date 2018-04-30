@@ -1,16 +1,24 @@
-desc "Open an irb session preloaded with the environment"
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
+
+require_relative 'config/application'
+
+desc 'Look for style guide offenses in your code'
+task :rubocop do
+  sh 'rubocop --format simple || true'
+end
+
+task default: [:rubocop, :spec]
+
+desc 'Open an irb session preloaded with the environment'
 task :console do
   require 'rubygems'
   require 'pry'
-  require_relative "config/application"
 
   Pry.start
 end
 
 ## Active Record related rake tasks
-
-require_relative 'config/application'
-
 namespace :db do
   desc 'create the database'
   task :create do
@@ -26,10 +34,17 @@ namespace :db do
 
   desc 'migrate the database (options: VERSION=x).'
   task :migrate do
-    ActiveRecord::Migrator.migrations_paths << File.dirname(__FILE__) + 'db/migrate'
+    ActiveRecord::Migrator.migrations_paths << \
+      File.dirname(__FILE__) + 'db/migrate'
     ActiveRecord::Migration.verbose = true
     version = ENV['VERSION'] ? ENV['VERSION'].to_i : nil
-    ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths, version)
+    if defined?(ActiveRecord::MigrationContext)
+      ActiveRecord::MigrationContext
+        .new(ActiveRecord::Migrator.migrations_paths)
+        .migrate(version)
+    else
+      ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths, version)
+    end
   end
 
   desc 'Retrieves the current schema version number'
@@ -39,7 +54,6 @@ namespace :db do
 
   desc 'populate the database with sample data'
   task :seed do
-    Dir["#{__dir__}/app/models/*.rb"].each {|file| require file }
     require "#{__dir__}/db/seeds.rb"
   end
 
@@ -51,6 +65,6 @@ namespace :db do
   private
 
   def db_path
-    ActiveRecord::Base.configurations["development"]["database"]
+    ActiveRecord::Base.configurations['development']['database']
   end
 end
