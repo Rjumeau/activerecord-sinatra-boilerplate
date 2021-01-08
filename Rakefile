@@ -73,7 +73,7 @@ db_namespace = namespace :db do
   private
 
   def db_path
-    if ActiveRecord.version.to_s.to_f >= 6.1
+    if ActiveRecord.version.to_s >= "6.1"
       ActiveRecord::Base.configurations.configs_for(env_name: 'development', name: 'primary').database
     else
       ActiveRecord::Base.configurations['development']['database']
