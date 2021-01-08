@@ -1,3 +1,4 @@
+require 'pry-byebug'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
@@ -73,6 +74,10 @@ db_namespace = namespace :db do
   private
 
   def db_path
-    ActiveRecord::Base.configurations['development']['database']
+    if ActiveRecord.version.to_s.to_f >= 6.1
+      ActiveRecord::Base.configurations.configs_for(env_name: 'development', name: 'primary').database
+    else
+      ActiveRecord::Base.configurations['development']['database']
+    end
   end
 end
