@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 
-gem "faker"
-gem "pry"
-gem "rake"
+gem "better_errors"
+gem "binding_of_caller"
+gem "pry-byebug"
 gem "sinatra"
 gem "sinatra-activerecord"
 gem "sinatra-contrib"
-gem "sqlite3"
+gem "thin"
