@@ -1,9 +1,7 @@
-require "sinatra"
-require "sinatra/reloader" if development?
-require "sinatra/activerecord"
-require "pry-byebug"
-require "better_errors"
 require_relative "config/application"
+require "sinatra"
+require "sinatra/reloader"
+require "sinatra/activerecord"
 
 get "/" do
   "Hello world!"
